@@ -24,7 +24,11 @@
     "compression": "^1.7.4",
     "connect-mongodb-session": "^2.4.1",
     "express": "^5.0.0-alpha.8",
+    "express-minify": "^1.0.0",
     "express-session": "^1.17.1",
-    "mongoose": "^5.11.12"
+    "handlebars": "^4.7.6",
+    "helmet": "^4.3.1",
+    "mongoose": "^5.11.12",
+    "serve-favicon": "^2.5.0"
   }
 }
