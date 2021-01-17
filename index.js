@@ -1,10 +1,9 @@
 /* Import */
 import express from "express";
 import mongoose from "mongoose";
-
+import ejs from "ejs";
 import session from "express-session";
 import mongodb_session_store from "connect-mongodb-session";
-
 import compression from "compression";
 import minify from "express-minify";
 import helmet from "helmet";
@@ -22,7 +21,12 @@ const __dirname = resolve();
 const app = express();
 
 // View (render)
-
+app.engine('ejs', async (path, data, cb) => {
+  ejs.renderFile(`${path}`, data, {
+    cache: false
+  }, cb);
+});
+app.set('view engine', 'ejs');
 
 // Security
 app.use(helmet());
@@ -48,11 +52,7 @@ app.use(
 
 // Static files
 app.use(compression());
-app.use(
-  minify({
-    cache: false,
-  })
-);
+app.use(minify());
 app.use(favicon(join(__dirname, "views/public/favicon.ico")));
 app.use("/public", express.static(join(__dirname, "views/public")));
 
@@ -60,11 +60,6 @@ app.use("/public", express.static(join(__dirname, "views/public")));
 app.use(express.json());
 
 // Router
-app.get("/", (req, res) => {
-  res.render("main.hbs", {
-    title: "Main text",
-  });
-});
 
 /* Start */
 try {
