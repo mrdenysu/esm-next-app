@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "colors": "^1.4.0",
+    "compression": "^1.7.4",
     "connect-mongodb-session": "^2.4.1",
     "express": "^5.0.0-alpha.8",
     "express-session": "^1.17.1",

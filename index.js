@@ -1,9 +1,11 @@
 /* Import */
 import express from "express";
 import mongoose from "mongoose";
-
 import session from "express-session";
 import mongodb_session_store from "connect-mongodb-session";
+import compression from "compression";
+
+import { join, resolve } from "path";
 
 import { PORT, db, secret } from "./config.js";
 import { error, success } from "./helpers/logger.js";
@@ -32,6 +34,10 @@ app.use(
     store: store,
   })
 );
+
+// Static files
+app.use(compression())
+app.use(express.static(join(resolve(), "views/public")))
 
 // Row as JSON string to res.body
 app.use(express.json())
