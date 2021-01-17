@@ -37,7 +37,7 @@ app.use(
 
 // Static files
 app.use(compression())
-app.use(express.static(join(resolve(), "views/public")))
+app.use("/public", express.static(join(resolve(), "views/public")))
 
 // Row as JSON string to res.body
 app.use(express.json())
