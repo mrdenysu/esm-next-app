@@ -19,4 +19,4 @@ export const email = {
   },
 };
 
-export const secret = "Kdi9a-28@u_-m2*@*u-ep(*-M,MJK-DA8D-LP(a@-*#&*^-%&%$&-)*(@-qjsa*";
+export const secret = "(Di9a-28@u_-m2*@*)";

@@ -16,7 +16,7 @@ const transporter = nodemailer.createTransport(email);
  * @param {Message} message Message
  */
 export default async function (to, message) {
-  transporter.sendMail({
+  return await transporter.sendMail({
     from: `NodeJS app <${email.auth.user}>`,
     to,
     subject: message.subject,
