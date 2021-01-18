@@ -1,4 +1,4 @@
-import { error, log, success } from "../util/logger.js";
+import { error } from "../util/logger.js";
 import Role from "../models/Role.js";
 import User from "../models/User.js";
 import { hash, compare } from "bcrypt";
@@ -30,7 +30,6 @@ class AuthController {
         return res.json({
           type: "success",
           message: "Код для подтверждения регистрации отправлен на e-mail",
-          data: req.body,
         });
       }
     } catch (e) {
@@ -109,10 +108,10 @@ class AuthController {
           });
           user.save();
 
+          req.session.token = generateAccessToken(condidate._id);
           return res.json({
             type: "success",
             message: "Регистрация прошла успешно",
-            data: user,
           });
         }
       } else {
