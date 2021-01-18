@@ -1,16 +1,15 @@
 /* Import */
 import { PORT, db, secret } from "./config.js";
+import session from "./middlewares/sessionMiddleware.js";
+import ejs from "./helpers/ejs.js";
+import serve from "./helpers/static-server.js";
+import { error, success } from "./helpers/logger.js";
+import apiRouter from "./routes/apiRouter.js";
 
 import { join, resolve } from "path";
 import express from "express";
 import mongoose from "mongoose";
 import helmet from "helmet";
-
-import session from "./middlewares/sessionMiddleware.js";
-
-import ejs from "./helpers/ejs.js";
-import serve from "./helpers/static-server.js";
-import { error, success } from "./helpers/logger.js";
 
 /* App */
 const app = express();
@@ -27,6 +26,7 @@ app.use(
 app.use(express.json());
 
 // Router
+app.use("/api", apiRouter);
 
 /* Start */
 try {
