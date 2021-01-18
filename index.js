@@ -5,7 +5,6 @@ import ejs from "ejs";
 import session from "express-session";
 import mongodb_session_store from "connect-mongodb-session";
 import compression from "compression";
-import minify from "express-minify";
 import helmet from "helmet";
 import favicon from "serve-favicon";
 
@@ -31,6 +30,11 @@ app.set('view engine', 'ejs');
 // Security
 app.use(helmet());
 
+// Static files
+app.use(compression());
+app.use(favicon(join(__dirname, "views/public/favicon.ico")));
+app.use("/public", express.static(join(__dirname, "views/public")));
+
 // Session
 const MongoDBStore = mongodb_session_store(session);
 const store = new MongoDBStore({
@@ -49,12 +53,6 @@ app.use(
     store: store,
   })
 );
-
-// Static files
-app.use(compression());
-app.use(minify());
-app.use(favicon(join(__dirname, "views/public/favicon.ico")));
-app.use("/public", express.static(join(__dirname, "views/public")));
 
 // Row as JSON string to res.body
 app.use(express.json());
