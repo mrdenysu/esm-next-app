@@ -1,9 +1,9 @@
 /* Import */
 import { PORT, db, secret } from "./config.js";
 import session from "./middlewares/sessionMiddleware.js";
-import ejs from "./helpers/ejs.js";
-import serve from "./helpers/static-server.js";
-import { error, success } from "./helpers/logger.js";
+import ejs from "./util/express/ejs.js";
+import serve from "./util/express/static-server.js";
+import { error, success } from "./util/logger.js";
 import apiRouter from "./routes/apiRouter.js";
 
 import { join, resolve } from "path";
