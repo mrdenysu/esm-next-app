@@ -29,6 +29,7 @@
     "handlebars": "^4.7.6",
     "helmet": "^4.3.1",
     "mongoose": "^5.11.12",
+    "nodemailer": "^6.4.17",
     "serve-favicon": "^2.5.0"
   }
 }
