@@ -11,4 +11,4 @@ export const db = {
   },
 };
 
-export const secret = "Kdi9a-28@u_-m2*@*u-ep(*-M,MJK-DA8D-LP(a@-*#&*^-%&%$&-)*(@-qjsa*"
+export const secret = "Kdi9a-28@u_-m2*@*u-ep(*-M,MJK-DA8D-LP(a@-*#&*^-%&%$&-)*(@-qjsa*";

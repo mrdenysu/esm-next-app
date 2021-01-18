@@ -7,9 +7,12 @@ import ejs from "ejs";
 export default function (app) {
   async function render(path, data, cb) {
     ejs.renderFile(
-      path, data, {
+      path,
+      data,
+      {
         cache: false,
-      }, cb
+      },
+      cb
     );
   }
 
