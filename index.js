@@ -1,6 +1,5 @@
 /* Import */
 import { PORT, db, secret } from "./config.js";
-import session from "./middlewares/sessionMiddleware.js";
 import ejs from "./util/express/ejs.js";
 import serve from "./util/express/static-server.js";
 import { error, success } from "./util/logger.js";
@@ -9,6 +8,10 @@ import { join, resolve } from "path";
 import express from "express";
 import mongoose from "mongoose";
 import helmet from "helmet";
+
+import session from "./middlewares/sessionMiddleware.js";
+import authMiddleware from "./middlewares/authMiddleware.js";
+import page404 from "./middlewares/404.js"
 
 import apiRouter from "./routes/apiRouter.js";
 import mainRouter from "./routes/mainRouter.js";
@@ -28,12 +31,17 @@ app.use(
 app.use(express.json());
 
 // Router
+app.use(authMiddleware)
+
 app.use("/", mainRouter);
+app.use("/user", apiRouter);
+app.use("/post", apiRouter);
+app.use("/chat", apiRouter);
+app.use("/clab", apiRouter);
 app.use("/api", apiRouter);
 
-app.use(function (req, res, next) {
-  res.status(404).send("Sorry can't find that!");
-});
+
+app.use(page404);
 
 /* Start */
 try {
