@@ -7,7 +7,7 @@ const User = new Schema({
   password: { type: String, required: true },
   
   nik: { type: String },
-  phone: { type: String, unique: true },
+  // phone: { type: String, unique: true, default: "+71112223344" },
   sex: { type: Number, default: 0, max: 2, min: 0 }, // 0 - не выбранно, 1 - ж, 2 - м
 
   roles: [{ type: Types.ObjectId, ref: "Role" }],

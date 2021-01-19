@@ -1,18 +1,28 @@
-import { error } from "../util/logger.js";
+// Main
+import { Controller } from "./Controller.js";
+
+// Models
 import Role from "../models/Role.js";
 import User from "../models/User.js";
+
+// Utils
 import { hash, compare } from "bcrypt";
 import { generateAccessToken, generateEmailToken, verifyToken } from "../util/jwt.js";
+import { error, log } from "../util/logger.js";
 import sendMail from "../util/sendMail.js";
 
-class AuthController {
+class AuthController extends Controller {
   /**
    * Запросить код авктивации
    * @param {import("express").Request} req
    * @param {import("express").Response} res
    */
   async get_validate_code(req, res) {
+    // if (this.__body_valids(req, res) == false) {
+    //   return
+    // }
     try {
+      if (this.__body_valid(req, res) == false) return
       const { email } = req.body;
       let condidate = await User.findOne({ email: email });
       if (condidate) {
@@ -33,11 +43,7 @@ class AuthController {
         });
       }
     } catch (e) {
-      error(e);
-      return res.status(500).json({
-        type: "error",
-        message: "Error in `get_validate_code`",
-      });
+      this.__error(res, "Error in `get_validate_code`", {}, e)
     }
   }
 
@@ -47,6 +53,7 @@ class AuthController {
    * @param {import("express").Response} res
    */
   async login(req, res) {
+    this.__body_valid()
     try {
       const { email, password } = req.body;
 
@@ -87,9 +94,9 @@ class AuthController {
    * @param {import("express").Response} res
    */
   async registration(req, res) {
+    // this._body_valid()
     try {
       const { email, password, code } = req.body;
-
       let verify = await verifyToken(code);
       let condidate = await User.findOne({ email: email });
 
@@ -101,14 +108,14 @@ class AuthController {
             data: req.body,
           });
         } else {
-          let user = new User({
+          const newUser = new User({
             email: email,
             password: await hash(password, 7),
             roles: [(await Role.findOne({ value: "USER" }))._id],
           });
-          user.save();
+          newUser.save();
 
-          req.session.token = generateAccessToken(user._id);
+          req.session.token = generateAccessToken(newUser._id);
           return res.json({
             type: "success",
             message: "Регистрация прошла успешно",
