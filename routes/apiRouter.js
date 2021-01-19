@@ -6,6 +6,7 @@ const auth = Router();
 auth.all("/login", authController.login);
 auth.all("/registration", authController.registration);
 auth.all("/get_validate_code", authController.get_validate_code);
+auth.all("/exit", authController.exit);
 
 /* Main API Router */
 const router = Router();

@@ -108,7 +108,7 @@ class AuthController {
           });
           user.save();
 
-          req.session.token = generateAccessToken(condidate._id);
+          req.session.token = generateAccessToken(user._id);
           return res.json({
             type: "success",
             message: "Регистрация прошла успешно",
@@ -126,6 +126,40 @@ class AuthController {
       return res.status(500).json({
         type: "error",
         message: "Error in `registration`",
+      });
+    }
+  }
+
+  async exit(req, res) {
+    try {
+      if (req?.user) {
+        delete req.session.token;
+        return res.json({
+          type: "success",
+          message: "Вы успешно де-авторизировались",
+        });
+      } else {
+        if (req.session?.token) {
+          delete req.session.token;
+          return res.json({
+            type: "success",
+            message: "Вы успешно де-авторизировались",
+            data: {
+              user: "Not find",
+            },
+          });
+        }
+
+        return res.json({
+          type: "error",
+          message: "Пользователь не авторизован",
+        });
+      }
+    } catch (e) {
+      error(e);
+      return res.status(500).json({
+        type: "error",
+        message: "Error in `exit`",
       });
     }
   }
